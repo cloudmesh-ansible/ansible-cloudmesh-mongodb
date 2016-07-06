@@ -87,3 +87,10 @@ ENV/
 
 # Rope project settings
 .ropeproject
+
+# User-specific stuff:
+.idea
+.idea/misc.xml
+.idea/modules.xml
+.idea/mongodb.iml
+.idea/workspace.xml

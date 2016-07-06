@@ -1,0 +1,29 @@
+---
+# tasks file for mongodb
+- name: import the public key used by the package management system
+  apt_key:
+    keyserver: "{{ mongodb_keyserver }}"
+    id: "{{ mongodb_gpgkey_id }}"
+    state: present
+
+- name: Add MongoDB repository
+  apt_repository:
+    repo: "{{ mongodb_repository_list }}"
+    state: present
+
+- name: install mongodb
+  apt:
+    pkg: "{{ mongodb_org }}"
+    state: latest
+    update_cache: yes
+  notify:
+    - start mongodb
+
+- name: add service file to remote
+  template:
+    src: mongodb.service.j2
+    dest: /lib/systemd/system/mongodb.service
+    owner: root
+    mode: 0644
+  notify:
+    - restart mongodb
